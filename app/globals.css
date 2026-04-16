@@ -1,0 +1,128 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500;700&family=Sora:wght@500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 255 255 255;
+  --surface: 247 247 251;
+  --surface-2: 238 240 246;
+  --line: 230 230 240;
+  --ink: 17 17 24;
+  --muted: 96 96 116;
+  --accent: 91 84 232;
+  --teal: 0 184 148;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: 10 10 15;
+  --surface: 17 17 24;
+  --surface-2: 23 23 34;
+  --line: 30 30 46;
+  --ink: 240 239 248;
+  --muted: 139 138 160;
+  --accent: 108 99 255;
+  --teal: 0 212 170;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: rgb(var(--bg));
+  color: rgb(var(--ink));
+  font-family: "DM Sans", Inter, system-ui, sans-serif;
+  letter-spacing: 0;
+  transition: background-color .3s ease, color .3s ease;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .045;
+  background-image: radial-gradient(rgba(255,255,255,.9) .7px, transparent .7px);
+  background-size: 4px 4px;
+  mix-blend-mode: difference;
+}
+
+a, button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: rgb(var(--accent) / .26);
+}
+
+.font-display {
+  font-family: "Sora", Inter, system-ui, sans-serif;
+}
+
+.font-mono {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.section-band {
+  position: relative;
+  overflow: hidden;
+}
+
+.section-band::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(var(--line)), transparent);
+}
+
+.orbit-panel {
+  background:
+    linear-gradient(135deg, rgb(var(--surface) / .98), rgb(var(--surface-2) / .62)),
+    repeating-linear-gradient(90deg, transparent 0 32px, rgb(var(--line) / .45) 32px 33px);
+}
+
+.status-grid {
+  background-image:
+    linear-gradient(rgb(var(--line) / .55) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--line) / .55) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.shimmer-text {
+  background: linear-gradient(100deg, rgb(var(--ink)), rgb(var(--accent)), rgb(var(--teal)), rgb(var(--ink)));
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 7s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .001ms !important;
+  }
+}
