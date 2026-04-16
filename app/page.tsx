@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
@@ -33,8 +33,10 @@ const modules: Module[] = [
   { name: "OrbiGate", title: "Выпуск на линию", text: "Проверка связки водитель, медосмотр, ТС и обязательные условия перед выпуском.", result: "Выпуск становится управляемым процессом." },
   { name: "OrbiUnit", title: "Транспортные средства", text: "Реестр транспорта, карточка ТС, история, события, обслуживание и привязка к водителю.", result: "Техника рассматривается как объект контроля." },
   { name: "OrbiCore", title: "Управление водителями", text: "Карточка водителя, медицинский статус, инструктажи, стажировка, дисциплина и допуск.", result: "По каждому водителю виден актуальный статус." },
+  { name: "OrbiControl", title: "Нарушения", text: "Контролирует соблюдение ПДД, выявляет рискованное поведение водителей и помогает предотвращать нарушения до их последствий.", result: "Зоны риска видны раньше инцидентов." },
   { name: "OrbiLex", title: "Нормативная база", text: "Единое пространство для требований, регламентов, инструкций и локальных актов.", result: "Нормативная база входит в операционный контур." },
-  { name: "OrbiSense", title: "События и отклонения", text: "Учет инструктажей, нарушений, предупреждений, критических событий и маршрутизация ответственным.", result: "Зоны риска видны раньше инцидентов." },
+  { name: "OrbiSense", title: "Инструктажи и проверки", text: "Организует и фиксирует инструктажи, учебно-тренировочные мероприятия, проверки на линии и обследования дорожных условий, обеспечивая контроль выполнения требований БДД.", result: "Все отчеты под рукой в один клик." },
+  { name: "OrbiCheck", title: "Контроль компетенций", text: "Контур обучения, тестирования и аудитов, обеспечивающий подтверждение компетенций персонала и контроль соблюдения требований БДД.", result: "Система обучения и объективной оценки знаний." },
   { name: "OrbiStat", title: "Отчеты и аналитика", text: "Отчеты по водителям, ТС, подразделениям, подрядчикам, допускам и блокировкам.", result: "Руководитель получает готовую картину." },
 ];
 
@@ -43,7 +45,7 @@ const flow = [
   ["02", "Карточка дополняется условиями", "OrbiCore показывает обязательные условия допуска."],
   ["03", "ТС получает актуальный статус", "OrbiUnit хранит историю, связи, обслуживание и события."],
   ["04", "Решение о выпуске", "OrbiGate применяет заданную логику допуска."],
-  ["05", "События фиксируются", "OrbiSense сохраняет нарушения и проблемные зоны."],
+  ["05", "События фиксируются", "OrbiControl сохраняет нарушения и проблемные зоны."],
   ["06", "Отчет готовится автоматически", "OrbiStat собирает управленческую картину."],
 ];
 
@@ -62,7 +64,7 @@ const kpis = [
 ];
 
 const faqs = [
-  ["Подходит ли система только для крупных автопарков?", "Нет. Orbiox масштабируется от малого предприятия до распределенной структуры с несколькими площадками и подрядчиками."],
+  ["Кому подходит система?", "Всем. Orbiox масштабируется от малого предприятия до распределенной структуры с несколькими площадками и подрядчиками."],
   ["Можно ли внедрять платформу поэтапно?", "Да. Внедрение может начинаться с одного критического контура, например с медосмотра и выпуска, а затем расширяться."],
   ["Можно ли адаптировать логику допуска?", "Да. Система строится вокруг вашей управленческой логики допуска и контроля, а не вокруг жесткого шаблона."],
   ["Чем Orbiox отличается от учетной системы?", "Orbiox связывает данные в единый контур принятия решений. Это управление процессом БДД, а не просто хранение записей."],
@@ -126,7 +128,7 @@ function ThemeToggle({ theme, setTheme }: { theme: Theme; setTheme: (theme: Them
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       className="grid h-10 w-10 place-items-center rounded-lg border border-line bg-surface text-ink transition-colors duration-300 hover:border-accent/50 hover:bg-accent/10"
     >
-      <span className="text-lg">{theme === "dark" ? "☾" : "☀"}</span>
+      <span className="text-lg">{theme === "dark" ? "☀" : "☾"}</span>
     </button>
   );
 }
@@ -280,22 +282,22 @@ export default function Page() {
             <p className="font-mono text-xs font-bold uppercase text-teal">ключевой результат</p>
             <h2 className="font-display mt-4 text-3xl font-bold leading-tight md:text-5xl">Не просто учитывать БДД, а управлять ей</h2>
           </Reveal>
-          <div className="grid gap-4 md:grid-cols-2">
-            <Reveal>
-              <div className="rounded-lg border border-line bg-bg p-6">
+          <div className="grid items-stretch gap-4 md:grid-cols-2">
+            <Reveal className="h-full">
+              <motion.div whileHover={{ y: -2 }} className="flex h-full flex-col rounded-lg border border-line bg-bg p-6 transition-shadow hover:shadow-lift">
                 <h3 className="font-display text-xl font-bold">До внедрения</h3>
-                <ul className="mt-5 space-y-3 text-muted">
+                <ul className="mt-5 flex-1 space-y-3 text-muted">
                   {['ручная проверка допуска', 'риск пропуска обязательной процедуры', 'запаздывающая реакция', 'отчеты собираются вручную'].map((item) => <li key={item}>— {item}</li>)}
                 </ul>
-              </div>
+              </motion.div>
             </Reveal>
-            <Reveal delay={0.08}>
-              <div className="rounded-lg border border-teal/40 bg-teal/10 p-6">
+            <Reveal className="h-full" delay={0.08}>
+              <motion.div whileHover={{ y: -2 }} className="flex h-full flex-col rounded-lg border border-teal/40 bg-teal/10 p-6 transition-shadow hover:shadow-lift">
                 <h3 className="font-display text-xl font-bold">После внедрения</h3>
-                <ul className="mt-5 space-y-3 text-muted">
+                <ul className="mt-5 flex-1 space-y-3 text-muted">
                   {['единые правила выпуска', 'водители и ТС в одном контуре', 'отклонения видны сразу', 'история прозрачна для анализа'].map((item) => <li key={item}>— {item}</li>)}
                 </ul>
-              </div>
+              </motion.div>
             </Reveal>
           </div>
         </div>
@@ -414,7 +416,7 @@ export default function Page() {
                 <p className="mt-5 max-w-3xl text-lg leading-relaxed text-muted">Покажем, как Orbiox может работать под ваши роли, транспортный контур, правила допуска и отчетность.</p>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-                <Button href="mailto:demo@orbiox.ru">Запросить демонстрацию</Button>
+                <Button href="mailto:bddonline@yandex.ru">Запросить демонстрацию</Button>
                 <Button href="tel:+79210906969" variant="secondary">Получить консультацию</Button>
               </div>
             </div>
@@ -459,7 +461,7 @@ export default function Page() {
           </div>
           <div>
             <p className="font-display font-bold">Модули</p>
-            <p className="mt-3 text-sm leading-relaxed text-muted">OrbiMed · OrbiGate · OrbiUnit · OrbiCore · OrbiLex · OrbiSense · OrbiStat</p>
+            <p className="mt-3 text-sm leading-relaxed text-muted">OrbiMed · OrbiGate · OrbiUnit · OrbiCore · OrbiControl · OrbiLex · OrbiSense · OrbiCheck · OrbiStat</p>
           </div>
           <div>
             <p className="font-display font-bold">Контакты</p>
